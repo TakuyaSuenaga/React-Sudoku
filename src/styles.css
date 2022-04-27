@@ -1,0 +1,100 @@
+.App {
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.cell {
+    background: white;
+    border: 1px solid gray;
+    width: 45px;
+    height: 45px;
+    font-size: 38px;
+    font-weight: bold;
+    text-align: center;
+    padding: 0 0 0 0;
+    margin: -1px -1px -1px -1px;
+    display: table-cell;
+}
+
+.cell.space {
+    color: transparent;
+}
+
+.cell.input {
+    color: cornflowerblue;
+}
+
+.cell.wrong {
+    color: tomato;
+}
+
+.group {
+    border: 2px solid black;
+    padding: 0;
+    margin: -2px -2px;
+    display: table-cell;
+}
+
+.board {
+    display: table;
+    margin-bottom: 10px;
+}
+
+.table {
+    /* clear: both; */
+    /* content: ""; */
+    display: table;
+}
+
+.table-row {
+    display: table-row;
+    padding: 0;
+}
+
+.table-cell {
+    display: table-cell;
+}
+
+.operator {
+    display: flex;
+    width: 405px;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.operator button {
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+}
+
+.operator button.highlight {
+    background: orange;
+}
+
+.numbers {
+    display: flex;
+    width: 405px;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.numbers button {
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 38px;
+    color: cornflowerblue;
+    text-align: center;
+    padding: 0;
+}
+
+.numbers button.highlight {
+    background: orange;
+}

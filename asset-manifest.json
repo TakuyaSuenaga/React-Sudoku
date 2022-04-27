@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/react-sudoku/static/css/main.073c9b0a.css",
+    "main.js": "/react-sudoku/static/js/main.7d2869ce.js",
+    "static/js/787.6c94a8ac.chunk.js": "/react-sudoku/static/js/787.6c94a8ac.chunk.js",
+    "static/media/logo.svg": "/react-sudoku/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "index.html": "/react-sudoku/index.html",
+    "main.073c9b0a.css.map": "/react-sudoku/static/css/main.073c9b0a.css.map",
+    "main.7d2869ce.js.map": "/react-sudoku/static/js/main.7d2869ce.js.map",
+    "787.6c94a8ac.chunk.js.map": "/react-sudoku/static/js/787.6c94a8ac.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.7d2869ce.js"
+  ]
+}

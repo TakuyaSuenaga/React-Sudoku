@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/react-sudoku/static/css/main.073c9b0a.css",
-    "main.js": "/react-sudoku/static/js/main.7d2869ce.js",
-    "static/js/787.6c94a8ac.chunk.js": "/react-sudoku/static/js/787.6c94a8ac.chunk.js",
-    "static/media/logo.svg": "/react-sudoku/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
+    "main.css": "/react-sudoku/static/css/main.365346a0.css",
+    "main.js": "/react-sudoku/static/js/main.f3cb990c.js",
     "index.html": "/react-sudoku/index.html",
-    "main.073c9b0a.css.map": "/react-sudoku/static/css/main.073c9b0a.css.map",
-    "main.7d2869ce.js.map": "/react-sudoku/static/js/main.7d2869ce.js.map",
-    "787.6c94a8ac.chunk.js.map": "/react-sudoku/static/js/787.6c94a8ac.chunk.js.map"
+    "static/media/erase.svg": "/react-sudoku/static/media/erase.5a5800cf9527d72e206e273e7ad3e8a6.svg",
+    "static/media/memo.svg": "/react-sudoku/static/media/memo.37af15f8a2a263d8650a903c879a8965.svg",
+    "static/media/reload.svg": "/react-sudoku/static/media/reload.12bc353757b05b110165b0346e6ec2d4.svg",
+    "main.365346a0.css.map": "/react-sudoku/static/css/main.365346a0.css.map",
+    "main.f3cb990c.js.map": "/react-sudoku/static/js/main.f3cb990c.js.map"
   },
   "entrypoints": [
-    "static/css/main.073c9b0a.css",
-    "static/js/main.7d2869ce.js"
+    "static/css/main.365346a0.css",
+    "static/js/main.f3cb990c.js"
   ]
 }

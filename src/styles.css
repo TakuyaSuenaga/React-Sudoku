@@ -1,83 +1,100 @@
-.App {
-    font-family: sans-serif;
+.sudoku {
+    width: 100%;
     text-align: center;
 }
 
-.cell {
+@media screen and (min-width: 450px) {
+    .sudoku {
+        width: 450px;
+    }
+}
+
+.square {
+    position: relative;
     background: white;
-    border: 1px solid gray;
-    width: 45px;
     height: 45px;
-    font-size: 38px;
+    border: 1px solid cornflowerblue;
+    margin: -1px -1px;
+    font-size: 30px;
     font-weight: bold;
     text-align: center;
-    padding: 0 0 0 0;
-    margin: -1px -1px -1px -1px;
-    display: table-cell;
+    padding: 0;
 }
 
-.cell.space {
-    color: transparent;
+.touch {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background: transparent;
+    border: none;
+    width: 100%;
+    height: 100%;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;
+	cursor: pointer;
 }
 
-.cell.input {
+.touch.input {
     color: cornflowerblue;
 }
 
-.cell.wrong {
+.touch.wrong {
     color: tomato;
 }
 
-.group {
-    border: 2px solid black;
+.memo {
+    background: transparent;
+    border: none;
+    height: 15px;
+    font-size: 10px;
+    text-align: center;
     padding: 0;
-    margin: -2px -2px;
+}
+
+.square.impossible {
+    background: lightgray;
+}
+
+.square.selected {
+    background: khaki;
+}
+
+.nine-table {
+    width: 100%;
+    display: table;
+}
+
+.nine-table-row {
+    width: 100%;
+    display: table-row;
+}
+
+.nine-table-item {
+    width: calc(100% / 3);
     display: table-cell;
+    vertical-align: top;
+}
+
+.group {
+    border: 4px solid darkblue;
+    margin: -2px -2px;
+    padding: 0;
 }
 
 .board {
-    display: table;
+    width: 90%;
+    margin: 0 auto;
     margin-bottom: 10px;
 }
 
-.table {
-    /* clear: both; */
-    /* content: ""; */
-    display: table;
-}
-
-.table-row {
-    display: table-row;
-    padding: 0;
-}
-
-.table-cell {
-    display: table-cell;
-}
-
-.operator {
-    display: flex;
-    width: 405px;
-    flex-direction: row;
-    justify-content: space-around;
-    margin-bottom: 10px;
-}
-
-.operator button {
-    background: white;
-    border: none;
-    border-radius: 50%;
-    width: 48px;
-    height: 48px;
-}
-
-.operator button.highlight {
-    background: orange;
+.margin {
+    height: 10px;
 }
 
 .numbers {
-    display: flex;
-    width: 405px;
+    width: 90%;
+    margin: 0 auto;
     flex-direction: row;
     justify-content: space-around;
     margin-bottom: 10px;
@@ -86,15 +103,36 @@
 .numbers button {
     background: white;
     border: none;
-    border-radius: 50%;
-    width: 45px;
+    width: 11%;
     height: 45px;
-    font-size: 38px;
+    border-radius: 50%;
+    font-size: 30px;
     color: cornflowerblue;
     text-align: center;
     padding: 0;
 }
 
 .numbers button.highlight {
-    background: orange;
+    background: khaki;
+}
+
+.operators {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+
+.operators button {
+    background: white;
+    width: 13%;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+}
+
+.operators button.highlight {
+    background: khaki;
 }

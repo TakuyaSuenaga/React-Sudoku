@@ -1,8 +1,8 @@
 import React from 'react';
-import "./styles.css";
-import reload from './reload.svg';
-import memo from './memo.svg';
-import erase from './erase.svg';
+import './styles.css';
+import reload from './reload.svg'
+import memo from './memo.svg'
+import erase from './erase.svg'
 
 const Question = [
     [6, 0, 5, 0, 0, 3, 4, 0, 0],
@@ -28,108 +28,165 @@ const Answer = [
     [3, 4, 8, 7, 1, 6, 5, 2, 9],
 ]
 
-class Cell extends React.Component {
-    render() {
-        const x = this.props.x;
-        const y = this.props.y;
-        let className = 'cell';
-        if (this.props.board[y][x] === 0) {className += ' space'}
-        else if (this.props.answer[y][x] !== this.props.board[y][x]) {className += ' wrong'}
-        else if (this.props.question[y][x] === 0) {className += ' input'}
+const NINE_INDEXES = [...Array(9)].map((_, i) => i);
+const NINE_NUMBERS = [...Array(9)].map((_, i) => i + 1);
 
-        return <button className={className} onClick={this.props.onClick}>
-            {this.props.board[y][x]}
-        </button>
+function NineTable(props) {
+    const rows = []
+    for (let i = 0; i < 3; i++) {
+        const cols = []
+        for (let j = 0; j < 3; j++) {
+            cols.push(<div className='nine-table-item' key={j}>{props.contents[i * 3 + j]}</div>)
+        }
+        rows.push(<div className='nine-table-row' key={i}>{cols}</div>)
+    }
+    return <div className='nine-table'>{rows}</div>
+}
+
+class Memo extends React.Component {
+    render() {
+        return (
+            <div className='memo'>
+                {this.props.visible && this.props.isChecked ? this.props.value : undefined}
+            </div>
+        )
+    }
+}
+
+class Square extends React.Component {
+    isImpossible([x, y]) {
+        if (this.props.info.selectedNumber === 0) {
+            return false
+        }
+        if (this.props.info.question[y][x] !== 0) {
+            return true
+        }
+        for (let i = 0; i < 9; i++) {
+            if (this.props.info.board[i][x] === this.props.info.selectedNumber ||
+                this.props.info.board[y][i] === this.props.info.selectedNumber) {
+                return true
+            }
+        }
+        const xx = 3 * Math.floor(x / 3)
+        const yy = 3 * Math.floor(y / 3)
+        for (let i = xx; i < xx + 3; i++) {
+            for (let j = yy; j < yy + 3; j++) {
+                if (this.props.info.board[j][i] === this.props.info.selectedNumber) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
+    touch([x, y]) {
+        let className = 'touch'
+        if (this.props.info.answer[y][x] !== this.props.info.board[y][x]) {className += ' wrong'}
+        else if (this.props.info.question[y][x] === 0) {className += ' input'}
+        return className
+    }
+
+    square([x, y]) {
+        let className = 'square'
+        if (this.isImpossible([x, y])) {className += ' impossible'}
+        if (this.props.info.selectedNumber !== 0 && this.props.info.board[y][x] === this.props.info.selectedNumber) {className += ' selected'}
+        return className
+    }
+
+    renderMemo(i) {
+        const x = 3 * (this.props.groupNo % 3) + this.props.squareNo % 3;
+        const y = 3 * Math.floor(this.props.groupNo / 3) + Math.floor(this.props.squareNo / 3);
+        const visible = (this.props.info.board[y][x] === 0)
+        return <Memo key={i} value={i+1} isChecked={this.props.info.memo[y][x][i]} visible={visible} />
+    }
+
+    render() {
+        const x = 3 * (this.props.groupNo % 3) + this.props.squareNo % 3;
+        const y = 3 * Math.floor(this.props.groupNo / 3) + Math.floor(this.props.squareNo / 3);
+        const value = this.props.info.board[y][x];
+        return (
+            <div className={this.square([x, y])} onClick={() => this.props.onClickSquare([x, y])}>
+                <NineTable contents={NINE_INDEXES.map(i => this.renderMemo(i))} />
+                <div className={this.touch([x, y])}>{value === 0 ? undefined : value}</div>
+            </div>
+        )
     }
 }
 
 class Group extends React.Component {
-    renderCell(i) {
-        const x = 3 * (this.props.value % 3) + i % 3;
-        const y = 3 * Math.floor(this.props.value / 3) + Math.floor(i / 3);
-        return <Cell
-            value={i}
-            key={i}
-            x={x}
-            y={y}
-            onClick={() => this.props.onClick([x, y])}
-            question={this.props.question}
-            answer={this.props.answer}
-            board={this.props.board}
-        />
+    renderSquare(i) {
+        return (
+            <Square
+                groupNo={this.props.groupNo}
+                squareNo={i}
+                key={i}
+                info={this.props.info}
+                onClickSquare={(x) => this.props.onClickSquare(x)}
+                onClickMemoCheck={(x) => this.props.onClickMemoCheck(x)}
+            />
+        )
     }
 
     render() {
-        const rows = [];
-        for (let i = 0; i < 3; i++) {
-            const cols = [];
-            for (let j = 0; j < 3; j++) {
-                cols.push(this.renderCell(i * 3 + j))
-            }
-            rows.push(<div className='table-row' key={i}>{cols}</div>)
-        }
-        return (<div className='group'>{rows}</div>);
+        return (
+            <div className='group'>
+                <NineTable contents={NINE_INDEXES.map(x => this.renderSquare(x))} />
+            </div>
+        )
     }
 }
 
 class Board extends React.Component {
     renderGroup(i) {
-        return <Group
-            value={i}
-            key={i}
-            onClick={(x) => this.props.onClick(x)}
-            question={this.props.question}
-            answer={this.props.answer}
-            board={this.props.board}
-        />
+        return (
+            <Group
+                groupNo={i}
+                key={i}
+                info={this.props.info}
+                onClickSquare={(x) => this.props.onClickSquare(x)}
+                onClickMemoCheck={(x) => this.props.onClickMemoCheck(x)}
+            />
+        )
     }
 
-    render() {
-        const rows = [];
-        for (let i = 0; i < 3; i++) {
-            const cols = [];
-            for (let j = 0; j < 3; j++) {
-                cols.push(this.renderGroup(i * 3 + j))
-            }
-            rows.push(<div className='table-row' key={i}>{cols}</div>)
-        }
-        return (<div className='board'>{rows}</div>);
-    }
-}
-
-class Operator extends React.Component {
     render() {
         return (
-            <div className='operator'>
-                <button onClick={() => this.props.onClickReload()}>
-                    <img src={reload} alt='reload' />
-                </button>
-                <button  className={this.props.selectedMemo ? 'highlight' : undefined} onClick={() => this.props.onClickMemo()}>
-                    <img src={memo} alt='memo' />
-                </button>
-                <button  className={this.props.selectedErase ? 'highlight' : undefined} onClick={() => this.props.onClickErase()}>
-                    <img src={erase} alt='erase' />
-                </button>
+            <div className='board'>
+                <NineTable contents={NINE_INDEXES.map(x => this.renderGroup(x))} />
             </div>
         )
     }
 }
 
 class Numbers extends React.Component {
-    renderNumbers(i) {
+    renderNumber(i) {
         return <button key={i} className={i === this.props.selectedNumber ? 'highlight' : undefined} onClick={() => this.props.onClick(i)}>
             {i}
         </button>
     }
 
     render() {
-        const numbers = []
-        for(let i = 1; i <= 9; i++) {
-            numbers.push(this.renderNumbers(i))
-        }
         return (
             <div className='numbers'>
-                {numbers}
+                {NINE_NUMBERS.map(x => this.renderNumber(x))}
+            </div>
+        )
+    }
+}
+
+class Operators extends React.Component {
+    render() {
+        return (
+            <div className='operators'>
+                <button className='operator' onClick={this.props.onClickReload}>
+                    <img src={reload} alt='reload'></img>
+                </button>
+                <button className={this.props.info.selectedMemo ? 'highlight' : ''} onClick={this.props.onClickMemo}>
+                    <img src={memo} alt='memo'></img>
+                </button>
+                <button className={this.props.info.selectedErase ? 'highlight' : ''} onClick={this.props.onClickErase}>
+                    <img src={erase} alt='erase'></img>
+                </button>
             </div>
         )
     }
@@ -139,39 +196,67 @@ class Sudoku extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            question: Question.slice(),
-            answer: Answer.slice(),
-            board: Array(9).fill(0).map(row => new Array(9).fill(0)),
             selectedNumber: 0,
             selectedMemo: false,
             selectedErase: false,
+            question: Question,
+            answer: Answer,
+            board: Array(9).fill(0).map(row => new Array(9).fill(0)),
+            memo: Array(9).fill(0).map(row => new Array(9).fill(0).map(row => new Array(9).fill(false))),
         }
     }
 
-    onClickCell([x, y]) {
+    onClickSquare([x, y]) {
         let board = this.state.board.slice();
-        if (this.state.selectedErase && this.state.question[y][x] === 0) {
-            board[y][x] = 0;
+        let memo = this.state.memo.slice();
+        const isEditable = (this.state.question[y][x] === 0);
+        const erase = this.state.selectedErase;
+        const number = this.state.selectedNumber;
+        if (!isEditable) {
+            return
         }
-        else if (this.state.selectedNumber) {
-            board[y][x] = this.state.selectedNumber;
+        if (this.state.selectedMemo) {
+            if (erase && number) {
+                memo[y][x][number-1] = false;
+            }
+            else if (number) {
+                memo[y][x][number-1] = true;
+            }
+            else {
+                return
+            }
         }
         else {
-
+            if (erase) {
+                board[y][x] = 0;
+            }
+            else if (number) {
+                board[y][x] = number;
+            }
+            else {
+                return
+            }
         }
 
         this.setState({
             board: board,
+            memo: memo,
         })
     }
 
-    onClickNumber(i) {
+    onClickMemoCheck([x, y]) {
+        let memo = this.state.memo.slice();
+        const selectedNumber = this.state.selectedNumber;
+        if (selectedNumber === 0) {
+            return
+        }
+
+        memo[y][x][selectedNumber-1] = true;
+
         this.setState({
-            selectedNumber: i,
-            selectedErase: false,
+            memo: memo,
         })
     }
-
 
     onClickReload() {
         const question = this.state.question.slice();
@@ -186,6 +271,7 @@ class Sudoku extends React.Component {
             question: question,
             answer: answer,
             board: board,
+            memo: Array(9).fill(0).map(row => new Array(9).fill(0).map(row => new Array(9).fill(false))),
             selectedNumber: 0,
             selectedMemo: false,
             selectedErase: false,
@@ -200,41 +286,39 @@ class Sudoku extends React.Component {
 
     onClickErase() {
         this.setState({
-            selectedNumber: 0,
             selectedErase: !this.state.selectedErase,
         })
     }
 
+    onClickNumber(i) {
+        this.setState({
+            selectedNumber: i,
+            selectedErase: false,
+        })
+    }
+
     render() {
-        return (
-            <div>
-                <div>
-                    <Board
-                        question={this.state.question}
-                        answer={this.state.answer}
-                        board={this.state.board}
-                        onClick={(x) => this.onClickCell(x)}
-                    />
-                </div>
-                <div>
-                    <Operator
-                        onClickReload={() => this.onClickReload()}
-                        onClickMemo={() => this.onClickMemo()}
-                        selectedMemo={this.state.selectedMemo}
-                        onClickErase={() => this.onClickErase()}
-                        selectedErase={this.state.selectedErase}
-                    />
-                </div>
-                <div>
-                    <Numbers 
-                        onClick={(i) => this.onClickNumber(i)}
-                        selectedNumber={this.state.selectedNumber}
-                    />
-                </div>
-            </div>
-        )
+        return <div className='sudoku'>
+            <Board
+                info={this.state}
+                onClickSquare={(x) => this.onClickSquare(x)}
+                onClickMemoCheck={(x) => this.onClickMemoCheck(x)}
+            />
+            <Operators
+                info={this.state}
+                onClickReload={() => this.onClickReload()}
+                onClickMemo={() => this.onClickMemo()}
+                onClickErase={() => this.onClickErase()}
+            />
+            <Numbers
+                onClick={(i) => this.onClickNumber(i)}
+                selectedNumber={this.state.selectedNumber}
+            />
+        </div>
     }
 }
+
+// ========================================
 
 export default function App() {
     return (

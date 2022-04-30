@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/react-sudoku/static/css/main.cf7b898a.css",
-    "main.js": "/react-sudoku/static/js/main.739912fe.js",
+    "main.css": "/react-sudoku/static/css/main.189577cf.css",
+    "main.js": "/react-sudoku/static/js/main.aab046a7.js",
     "index.html": "/react-sudoku/index.html",
     "static/media/erase.svg": "/react-sudoku/static/media/erase.5a5800cf9527d72e206e273e7ad3e8a6.svg",
     "static/media/memo.svg": "/react-sudoku/static/media/memo.37af15f8a2a263d8650a903c879a8965.svg",
     "static/media/reload.svg": "/react-sudoku/static/media/reload.12bc353757b05b110165b0346e6ec2d4.svg",
-    "main.cf7b898a.css.map": "/react-sudoku/static/css/main.cf7b898a.css.map",
-    "main.739912fe.js.map": "/react-sudoku/static/js/main.739912fe.js.map"
+    "main.189577cf.css.map": "/react-sudoku/static/css/main.189577cf.css.map",
+    "main.aab046a7.js.map": "/react-sudoku/static/js/main.aab046a7.js.map"
   },
   "entrypoints": [
-    "static/css/main.cf7b898a.css",
-    "static/js/main.739912fe.js"
+    "static/css/main.189577cf.css",
+    "static/js/main.aab046a7.js"
   ]
 }

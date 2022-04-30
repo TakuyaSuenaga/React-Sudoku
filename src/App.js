@@ -181,10 +181,10 @@ class Operators extends React.Component {
                 <button className='operator' onClick={this.props.onClickReload}>
                     <img src={reload} alt='reload'></img>
                 </button>
-                <button className={this.props.info.selectedMemo ? 'highlight' : ''} onClick={this.props.onClickMemo}>
+                <button className={this.props.info.selectedMemo ? 'operator highlight' : 'operator'} onClick={this.props.onClickMemo}>
                     <img src={memo} alt='memo'></img>
                 </button>
-                <button className={this.props.info.selectedErase ? 'highlight' : ''} onClick={this.props.onClickErase}>
+                <button className={this.props.info.selectedErase ? 'operator highlight' : 'operator'} onClick={this.props.onClickErase}>
                     <img src={erase} alt='erase'></img>
                 </button>
             </div>

@@ -58,9 +58,6 @@ class Square extends React.Component {
         if (this.props.info.selectedNumber === 0) {
             return false
         }
-        if (this.props.info.question[y][x] !== 0) {
-            return true
-        }
         for (let i = 0; i < 9; i++) {
             if (this.props.info.board[i][x] === this.props.info.selectedNumber ||
                 this.props.info.board[y][i] === this.props.info.selectedNumber) {
